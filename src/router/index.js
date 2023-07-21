@@ -6,30 +6,6 @@ Vue.use(Router);
 /* Layout */
 import Layout from "@/layout";
 
-/**
- * Note: sub-menu only appear when route children.length >= 1
- * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
- *
- * hidden: true                   if set true, item will not show in the sidebar(default is false)
- * alwaysShow: true               if set true, will always show the root menu
- *                                if not set alwaysShow, when item has more than one children route,
- *                                it will becomes nested mode, otherwise not show the root menu
- * redirect: noRedirect           if set noRedirect will no redirect in the breadcrumb
- * name:'router-name'             the name is used by <keep-alive> (must set!!!)
- * meta : {
-    roles: ['admin','editor']    control the page roles (you can set multiple roles)
-    title: 'title'               the name show in sidebar and breadcrumb (recommend set)
-    icon: 'svg-name'/'el-icon-x' the icon show in the sidebar
-    breadcrumb: false            if set false, the item will hidden in breadcrumb(default is true)
-    activeMenu: '/example/list'  if set path, the sidebar will highlight the path you set
-  }
- */
-
-/**
- * constantRoutes
- * a base page that does not have permission requirements
- * all roles can be accessed
- */
 export const constantRoutes = [
   {
     path: "/login",
@@ -46,13 +22,86 @@ export const constantRoutes = [
   {
     path: "/",
     component: Layout,
-    redirect: "/dashboard",
+
+    meta: {
+      title: "系统设置",
+      icon: "nested",
+    },
     children: [
       {
-        path: "dashboard",
-        name: "Dashboard",
-        component: () => import("@/views/dashboard/index"),
-        meta: { title: "Dashboard", icon: "dashboard" },
+        path: "Home",
+        name: "Home",
+        component: () => import("../views/Home/index.vue"),
+        meta: { title: "银行维护", icon: "dashboard" },
+      },
+      {
+        path: "/area",
+        name: "area",
+
+        component: () => import("../views/area/index.vue"),
+        meta: { title: "地区维护", icon: "form" },
+      },
+      {
+        path: "/news",
+        component: Layout,
+
+        name: "news",
+        component: () => import("../views/news/index.vue"),
+        meta: { title: "新闻公告", icon: "form" },
+      },
+      {
+        path: "/mcc",
+        component: Layout,
+
+        name: "mcc",
+        component: () => import("../views/mcc/mcc.vue"),
+        meta: { title: "MCC维护", icon: "form" },
+      },
+      {
+        path: "/roles",
+        component: Layout,
+
+        name: "roles",
+        component: () => import("../views/roles/roles.vue"),
+        meta: { title: "角色管理", icon: "form" },
+      },
+      {
+        path: "/user",
+        component: Layout,
+
+        name: "user",
+        component: () => import("../views/user/index.vue"),
+        meta: { title: "用户管理", icon: "form" },
+      },
+      {
+        path: "/menumanagement",
+        component: Layout,
+
+        name: "menumanagement",
+        component: () => import("../views/menumanagement/index.vue"),
+        meta: { title: "菜单管理", icon: "form" },
+      },
+    ],
+  },
+  {
+    path: "/agentmanagement",
+    component: Layout,
+    meta: {
+      title: "代理商管理",
+      icon: "form",
+    },
+    children: [
+      {
+        path: "/agentmanagement",
+        name: "agentmanagement",
+        component: () => import("../views/Home/index.vue"),
+        meta: { title: "代理商录入", icon: "form" },
+      },
+      {
+        path: "/agentmanagement",
+        name: "agentmanagement",
+        component: () => import("../views/Home/index.vue"),
+        meta: { title: "代理商录入", icon: "form" },
       },
     ],
   },
@@ -82,24 +131,13 @@ export const constantRoutes = [
   {
     path: "/form",
     component: Layout,
+    hidden: true,
     children: [
       {
         path: "index",
         name: "Form",
         component: () => import("@/views/form/index"),
         meta: { title: "Form", icon: "form" },
-      },
-    ],
-  },
-  {
-    path: "/bank",
-    component: Layout,
-    children: [
-      {
-        path: "index",
-        name: "bank",
-        component: () => import("../views/bank/bank.vue"),
-        meta: { title: "银行维护", icon: "form" },
       },
     ],
   },

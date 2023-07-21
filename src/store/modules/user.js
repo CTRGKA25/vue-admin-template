@@ -1,46 +1,51 @@
-import { login, logout, getInfo } from '@/api/user'
-import { getToken, setToken, removeToken } from '@/utils/auth'
-import { resetRouter } from '@/router'
+import { login, logout, getInfo } from "@/api/user";
+import { getToken, setToken, removeToken } from "@/utils/auth";
+import { resetRouter } from "@/router";
 
 const getDefaultState = () => {
   return {
     token: getToken(),
-    name: '',
-    avatar: ''
-  }
-}
+    name: "",
+    avatar: "",
+  };
+};
 
-const state = getDefaultState()
+const state = getDefaultState();
 
 const mutations = {
   RESET_STATE: (state) => {
-    Object.assign(state, getDefaultState())
+    Object.assign(state, getDefaultState());
   },
   SET_TOKEN: (state, token) => {
-    state.token = token
+    state.token = token;
+    window.sessionStorage.setItem("accessToken", token);
+    setToken(token);
   },
   SET_NAME: (state, name) => {
-    state.name = name
+    state.name = name;
   },
   SET_AVATAR: (state, avatar) => {
-    state.avatar = avatar
-  }
-}
+    state.avatar = avatar;
+  },
+};
 
 const actions = {
   // user login
-  login({ commit }, userInfo) {
-    const { mobile, password } = userInfo
+  login({ commit }, data) {
+    const { mobile, password } = data;
     return new Promise((resolve, reject) => {
-      login({ mobile: mobile.trim(), password: password }).then(response => {
-        const { data } = response
-        commit('SET_TOKEN', data.token)
-        setToken(data.token)
-        resolve()
-      }).catch(error => {
-        reject(error)
-      })
-    })
+      login({ mobile: mobile.trim(), password: password })
+        .then((response) => {
+        
+          // const { data } = response;
+          commit("SET_TOKEN", response.headers.authorization);
+          setToken(response.headers.authorization);
+          resolve();
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
   },
 
   // get user info
@@ -68,6 +73,7 @@ const actions = {
   logout({ commit, state }) {
     return new Promise((resolve, reject) => {
       logout(state.token).then(() => {
+        window.sessionStorage.clear();
         removeToken() // must remove  token  first
         resetRouter()
         commit('RESET_STATE')
@@ -80,18 +86,17 @@ const actions = {
 
   // remove token
   resetToken({ commit }) {
-    return new Promise(resolve => {
-      removeToken() // must remove  token  first
-      commit('RESET_STATE')
-      resolve()
-    })
-  }
-}
+    return new Promise((resolve) => {
+      removeToken(); // must remove  token  first
+      commit("RESET_STATE");
+      resolve();
+    });
+  },
+};
 
 export default {
   namespaced: true,
   state,
   mutations,
-  actions
-}
-
+  actions,
+};

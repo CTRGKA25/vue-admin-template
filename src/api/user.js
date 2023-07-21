@@ -1,11 +1,15 @@
-import request from '@/utils/request'
+import request from "@/utils/request";
+import { baseUrl } from "@/api/url";
 
 export function login(data) {
   return request({
-    url: 'http://zhifu.funstone.net:8011/login',
-    method: 'post',
-    data
-  })
+    url: `${baseUrl}/login`,
+    method: "post",
+    header: {
+      "Content-Type": "application/json",
+    },
+    data,
+  });
 }
 
 // export function getInfo(token) {
@@ -18,7 +22,7 @@ export function login(data) {
 
 export function logout() {
   return request({
-    url: '/vue-admin-template/user/logout',
-    method: 'post'
-  })
+    url: `${baseUrl}/login/out`,
+    method: "post",
+  });
 }
