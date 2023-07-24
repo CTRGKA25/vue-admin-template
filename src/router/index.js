@@ -22,14 +22,14 @@ export const constantRoutes = [
   {
     path: "/",
     component: Layout,
-
     meta: {
       title: "系统设置",
       icon: "nested",
     },
+    redirect: "/Home",  
     children: [
       {
-        path: "Home",
+        path: "/Home",
         name: "Home",
         component: () => import("../views/Home/index.vue"),
         meta: { title: "银行维护", icon: "dashboard" },
@@ -94,7 +94,7 @@ export const constantRoutes = [
       {
         path: "/agentmanagement",
         name: "agentmanagement",
-        component: () => import("../views/Home/index.vue"),
+        component: () => import("../views/agentinput"),
         meta: { title: "代理商录入", icon: "form" },
       },
       {
