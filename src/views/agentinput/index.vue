@@ -432,7 +432,7 @@
           :file-list="identityCardImgFileList"
           :headers="identityCardImgUploadHeaders"
           :data="identityCardImgUploadData"
-          action="/oss/uploadFile2"
+          action="http://zhifu.funstone.net:8011/oss/uploadFile2"
           list-type="picture-card"
           show-file-list
           :limit="1"
@@ -449,7 +449,7 @@
           :file-list="bankCardImgFileList"
           :headers="bankCardImgUploadHeaders"
           :data="bankCardImgUploadData"
-          action="/oss/uploadFile2"
+          action="http://zhifu.funstone.net:8011/oss/uploadFile2"
           list-type="picture-card"
           show-file-list
           :limit="1"
@@ -466,7 +466,7 @@
           :file-list="contractImgFileList"
           :headers="contractImgUploadHeaders"
           :data="contractImgUploadData"
-          action="/oss/uploadFile2"
+          action="http://zhifu.funstone.net:8011/oss/uploadFile2"
           list-type="picture-card"
           show-file-list
           :limit="1"
@@ -483,7 +483,7 @@
           :file-list="otherFileFileList"
           :headers="otherFileUploadHeaders"
           :data="otherFileUploadData"
-          action="/oss/uploadFile2"
+          action="http://zhifu.funstone.net:8011/oss/uploadFile2"
           list-type="picture-card"
           show-file-list
           :limit="1"
@@ -514,8 +514,8 @@ export default {
         assuranceFee: "",
         withdrawalFee: "",
         t0Divide: "",
-        agentType: 2,
-        bizType: [1, 3, 2],
+        agentType: 1,
+        bizType: [],
         t1Divide: "",
         address: "",
         address2: "",

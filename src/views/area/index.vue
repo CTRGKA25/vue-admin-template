@@ -8,10 +8,10 @@
         clearable
       >
         <el-option
-          v-for="item in 1"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
+          v-for="item in ProvincialList"
+          :key="item.codeId"
+          :label="item.cityName"
+          :value="item.codeId"
         ></el-option>
       </el-select>
       <el-input
@@ -227,6 +227,7 @@ export default {
         province: "",
       },
       id: "",
+      ProvincialList: "",
     };
   },
   created() {
@@ -249,7 +250,9 @@ export default {
       citylistCode().then((res) => {});
     },
     cityfirst() {
-      cityfirst().then((res) => {});
+      cityfirst().then((res) => {
+        this.ProvincialList = res.data.data;
+      });
     },
     // 新增
     city1add() {

@@ -22,11 +22,11 @@ export const constantRoutes = [
   {
     path: "/",
     component: Layout,
+    redirect: "/Home",
     meta: {
-      title: "系统设置",
-      icon: "nested",
+      title: "系统管理",
+      icon: "form",
     },
-    redirect: "/Home",  
     children: [
       {
         path: "/Home",
@@ -84,7 +84,7 @@ export const constantRoutes = [
     ],
   },
   {
-    path: "/agentmanagement",
+    path: "/agent",
     component: Layout,
     meta: {
       title: "代理商管理",
@@ -98,10 +98,10 @@ export const constantRoutes = [
         meta: { title: "代理商录入", icon: "form" },
       },
       {
-        path: "/agentmanagement",
-        name: "agentmanagement",
-        component: () => import("../views/Home/index.vue"),
-        meta: { title: "代理商录入", icon: "form" },
+        path: "/agentreview",
+        name: "agentreview",
+        component: () => import("../views/agentreview"),
+        meta: { title: "代理商审核", icon: "form" },
       },
     ],
   },
