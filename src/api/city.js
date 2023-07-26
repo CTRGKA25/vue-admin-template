@@ -38,7 +38,7 @@ export function city1del(data) {
     header: {
       "Content-Type": "application/json",
     },
-    method: "DELETE",
+    method: "post",
   });
 }
 export function citylistCode() {

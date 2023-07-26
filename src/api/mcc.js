@@ -38,7 +38,7 @@ export function Mccdel(data) {
     header: {
       "Content-Type": "application/json",
     },
-    method: "DELETE",
+    method: "post",
     data,
   });
 }

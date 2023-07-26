@@ -38,6 +38,6 @@ export function newsdel(data) {
     header: {
       "Content-Type": "application/json",
     },
-    method: "DELETE",
+    method: "post",
   });
 }

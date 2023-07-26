@@ -184,10 +184,7 @@ export default {
         this.delarr.push(this.multipleSelection[i].id);
       }
       if (this.delarr.length > 0) {
-        let obj = {
-          ids: this.delarr,
-        };
-        Roledel(obj).then((res) => {
+        Roledel(this.delarr).then((res) => {
           if (res.data.code == 200) {
             this.$message({
               type: "success",
