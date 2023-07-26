@@ -21,9 +21,9 @@
       <el-table-column type="selection" width="55"> </el-table-column>
       <el-table-column prop="id" label="ID" width="100"></el-table-column>
 
-      <el-table-column prop="province" label="新闻标题"></el-table-column>
+      <el-table-column prop="title" label="新闻标题"></el-table-column>
 
-      <el-table-column prop="city" label="时间"> </el-table-column>
+      <el-table-column prop="createtime" label="时间"> </el-table-column>
       <el-table-column label="操作" width="150">
         <template v-slot="scope">
           <el-button
@@ -81,10 +81,7 @@
           <el-button type="primary" v-if="!isedit" @click="addbank('newform')"
             >添 加</el-button
           >
-          <el-button
-            type="primary"
-            v-if="isedit"
-            @click="city1update('newform')"
+          <el-button type="primary" v-if="isedit" @click="newsupdate('newform')"
             >修 改</el-button
           >
           <el-button @click="dialogclose">取 消</el-button>
@@ -209,12 +206,8 @@ export default {
     update(row) {
       this.isedit = true;
       this.newform.id = row.id;
-      this.newform.code = row.code;
-      this.newform.name = row.name;
-      this.newform.regionalLevel = row.regionalLevel;
-      this.newform.city = row.city;
-      this.newform.clearcode = row.clearcode;
-      this.newform.province = row.province;
+      this.newform.title = row.title;
+      this.newform.content = row.content;
       this.dialogVisible = true;
     },
     newsupdate() {

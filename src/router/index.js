@@ -103,6 +103,24 @@ export const constantRoutes = [
         component: () => import("../views/agentreview"),
         meta: { title: "代理商审核", icon: "form" },
       },
+      {
+        path: "/agentinquiry",
+        name: "agentinquiry",
+        component: () => import("../views/agentinquiry"),
+        meta: { title: "代理商查询", icon: "form" },
+      },
+      {
+        path: "/agentchangeinquiry",
+        name: "agentchangeinquiry",
+        component: () => import("../views/agentinquiry"),
+        meta: { title: "代理商变更查询", icon: "form" },
+      },
+      {
+        path: "/reconciliationrecord",
+        name: "reconciliationrecord",
+        component: () => import("../views/reconciliationrecord"),
+        meta: { title: "调账记录", icon: "form" },
+      },
     ],
   },
 

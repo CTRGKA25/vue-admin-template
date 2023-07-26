@@ -34,7 +34,7 @@ export function newsupdate(data) {
 
 export function newsdel(data) {
   return request({
-    url: `${baseUrl}/news/del`,
+    url: `${baseUrl}/news/del/?id=${data}`,
     header: {
       "Content-Type": "application/json",
     },

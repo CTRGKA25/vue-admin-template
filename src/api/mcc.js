@@ -34,10 +34,11 @@ export function Mccupdate(data) {
 
 export function Mccdel(data) {
   return request({
-    url: `${baseUrl}/Mcc/del/?id=${data}`,
+    url: `${baseUrl}/Mcc/del`,
     header: {
       "Content-Type": "application/json",
     },
     method: "DELETE",
+    data,
   });
 }

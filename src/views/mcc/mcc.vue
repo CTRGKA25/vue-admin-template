@@ -25,13 +25,14 @@
       ></el-input>
       <el-button type="primary" @click="handleSearch">查询</el-button>
       <el-button type="primary" plain @click="handleAdd">添加地区</el-button>
-      <el-button type="primary" plain @click="handleAdd">删除</el-button>
+      <el-button type="primary" plain @click="Mccdel">删除</el-button>
     </div>
     <el-table
       style="width: 100%"
       class="table-wrap"
       :data="listData"
       highlight-current-row
+      @selection-change="handleSelectionChange"
     >
       <el-table-column type="selection" width="55"> </el-table-column>
       <el-table-column prop="id" label="ID" width="100"></el-table-column>
@@ -61,8 +62,8 @@
         :model="newform"
         label-width="120px"
       >
-        <el-form-item label="MCC类别" prop="regionalLevel">
-          <el-select v-model="newform.regionalLevel" placeholder="请选择">
+        <el-form-item label="MCC类别" prop="type">
+          <el-select v-model="newform.type" placeholder="请选择">
             <el-option label="民生类" :value="1"></el-option>
             <el-option label="一般类" :value="2"></el-option>
             <el-option label="餐娱类" :value="3"></el-option>
@@ -74,7 +75,7 @@
           <el-input v-model="newform.code"></el-input>
         </el-form-item>
 
-        <el-form-item label="经营范围" prop="name">
+        <el-form-item label="经营范围" prop="businessScope">
           <el-input
             type="textarea"
             :autosize="{ minRows: 5, maxRows: 5 }"
@@ -121,12 +122,9 @@ export default {
 
       isedit: false,
       rules: {
-        name: [{ required: true, message: "请填写", trigger: "blur" }],
-        province: [{ required: true, message: "请填写", trigger: "blur" }],
+        businessScope: [{ required: true, message: "请填写", trigger: "blur" }],
+        type: [{ required: true, message: "请填写", trigger: "blur" }],
         code: [{ required: true, message: "请填写", trigger: "blur" }],
-        regionalLevel: [{ required: true, message: "请填写", trigger: "blur" }],
-        city: [{ required: true, message: "请填写", trigger: "blur" }],
-        clearcode: [{ required: true, message: "请填写", trigger: "blur" }],
       },
       newform: {
         code: "",
@@ -134,6 +132,7 @@ export default {
         businessScope: "",
       },
       id: "",
+      delarr: [],
     };
   },
   created() {
@@ -141,8 +140,6 @@ export default {
   },
   mounted() {
     this.getmcclist();
-    this.citylistCode();
-    this.cityfirst();
   },
   methods: {
     //列表
@@ -176,21 +173,34 @@ export default {
         }
       });
     },
+    handleSelectionChange(val) {
+      this.multipleSelection = val;
+    },
+
     //删除
     Mccdel(row) {
-      Mccdel(row.id).then((res) => {
-        if (res.data.code == 200) {
-          this.$message({
-            type: "success",
-            message: "删除成功!",
-          });
-          this.getmcclist();
-          this.dialogVisible = false;
-        } else {
-          this.$message.error(res.data.message);
-          this.dialogVisible = false;
-        }
-      });
+      const length = this.multipleSelection.length;
+      for (let i = 0; i < length; i++) {
+        this.delarr.push(this.multipleSelection[i].id);
+      }
+      if (this.delarr.length > 0) {
+        let obj = {
+          ids: this.delarr,
+        };
+        Mccdel(obj).then((res) => {
+          if (res.data.code == 200) {
+            this.$message({
+              type: "success",
+              message: "删除成功!",
+            });
+            this.getmcclist();
+            this.dialogVisible = false;
+          } else {
+            this.$message.error(res.data.message);
+            this.dialogVisible = false;
+          }
+        });
+      }
     },
 
     // 翻页

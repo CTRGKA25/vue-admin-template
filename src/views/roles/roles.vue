@@ -9,12 +9,20 @@
 
       <el-button type="primary" @click="handleSearch">查询</el-button>
       <el-button type="primary" plain @click="handleAdd">添加角色</el-button>
+
+      <el-button
+        type="primary"
+        class="table-btn1 warning style-color-2"
+        @click="Roledel()"
+        >删除</el-button
+      >
     </div>
     <el-table
       style="width: 100%"
       class="table-wrap"
       :data="listData"
       highlight-current-row
+      @selection-change="handleSelectionChange"
     >
       <el-table-column type="selection" width="55"> </el-table-column>
 
@@ -33,13 +41,6 @@
           >
 
           <el-button
-            type="text"
-            size="small"
-            class="table-btn1 warning style-color-2"
-            @click="Roledel(scope.row)"
-            >删除</el-button
-          >
-             <el-button
             type="text"
             size="small"
             class="table-btn1 warning style-color-2"
@@ -74,7 +75,6 @@
         <el-form-item label="角色名" prop="name">
           <el-input v-model="newform.name"></el-input>
         </el-form-item>
-
         <el-form-item label="roleKey" prop="roleKey">
           <el-input v-model="newform.roleKey"></el-input>
         </el-form-item>
@@ -128,9 +128,12 @@ export default {
         roleKey: [{ required: true, message: "请填写", trigger: "blur" }],
         description: [{ required: true, message: "请填写", trigger: "blur" }],
       },
+      multipleSelection: "",
+      delarr: [],
       newform: {
-        description: "",
         name: "",
+        description: "",
+
         roleKey: "",
         status: 0,
       },
@@ -150,6 +153,10 @@ export default {
         this.total = Number(res.data.data.total);
         this.listData = res.data.data.list;
       });
+    },
+
+    handleSelectionChange(val) {
+      this.multipleSelection = val;
     },
 
     // 新增
@@ -172,19 +179,28 @@ export default {
     },
     //删除
     Roledel(row) {
-      Roledel(row.id).then((res) => {
-        if (res.data.code == 200) {
-          this.$message({
-            type: "success",
-            message: "删除成功!",
-          });
-          this.getRoleall();
-          this.dialogVisible = false;
-        } else {
-          this.$message.error(res.data.message);
-          this.dialogVisible = false;
-        }
-      });
+      const length = this.multipleSelection.length;
+      for (let i = 0; i < length; i++) {
+        this.delarr.push(this.multipleSelection[i].id);
+      }
+      if (this.delarr.length > 0) {
+        let obj = {
+          ids: this.delarr,
+        };
+        Roledel(obj).then((res) => {
+          if (res.data.code == 200) {
+            this.$message({
+              type: "success",
+              message: "删除成功!",
+            });
+            this.getRoleall();
+            this.dialogVisible = false;
+          } else {
+            this.$message.error(res.data.message);
+            this.dialogVisible = false;
+          }
+        });
+      }
     },
 
     // 翻页

@@ -38,6 +38,7 @@ export function Roledel(data) {
     header: {
       "Content-Type": "application/json",
     },
-    method: "DELETE",
+    method: "post",
+    data,
   });
 }
